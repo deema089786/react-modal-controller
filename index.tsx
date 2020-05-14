@@ -56,7 +56,7 @@ export const ModalsProvider: React.FC<Props> = ({ children, initialModals = {} }
     };
 
     const closeModal: Modals['closeModal'] = () => setModal({ open: false, key: null, Component: null, props: null });
-    console.log(modal);
+
     return (
         <ModalsContext.Provider
             value={{
