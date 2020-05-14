@@ -1,4 +1,4 @@
-# react-modal-contoller
+# react-modal-controller
 
 It helps you to manage any of your modals from anywhere in your code.
 
@@ -55,7 +55,7 @@ Then just open modals from enywhere
 
 ```js
 //HomePage.jsx/tsx
-import { useModals } from 'react-modal-contoller';
+import { useModals } from 'react-modal-controller';
 ...
 
 const HomePage = () => {
