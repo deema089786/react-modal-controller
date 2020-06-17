@@ -43,7 +43,7 @@ const SignInModal = (props) => {
     const { closeModal } = useModals();
     const { anyProp } = props;
     return (
-        <Dialog onClose={closeModal} open>
+        <Dialog onClose={() => closeModal('SIGN_IN')} open>
             Some modal content
             { anyProp }
         </Dialog>
@@ -76,3 +76,10 @@ const HomePage = () => {
 ```sh
 $ npm install --save react-modal-controller
 ```
+
+### API
+`openModal(<model_key>)` Open any of specified modals
+
+`closeModal()` Close all modals
+
+`closeModal(<modal_key>)` Close modal with specific key

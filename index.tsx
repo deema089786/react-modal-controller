@@ -3,7 +3,7 @@ import React, { useState, useContext, FunctionComponent } from 'react';
 export interface Modals {
     addModal(key: string, modal: FunctionComponent<any>): void;
     openModal(key: string, props?: { [key: string]: any }): void;
-    closeModal(): void;
+    closeModal(key?: string): void;
 }
 
 const initialState: Modals = {
@@ -29,33 +29,30 @@ interface Props {
 export const ModalsProvider: React.FC<Props> = ({ children, initialModals = {} }: Props) => {
     const [modals, setModals] = useState<{ [key: string]: FunctionComponent<any> }>(initialModals);
     const [modal, setModal] = useState<{
-        open: boolean;
         key: string;
         Component: FunctionComponent<any>;
         props: { [key: string]: any };
-    }>({
-        open: false,
-        key: null,
-        Component: null,
-        props: null,
-    });
+    }[]>([]);
 
     const addModal: Modals['addModal'] = (key, ModalComponent) => {
-        setModals((state) => {
-            return { ...state, [key]: ModalComponent };
-        });
+        setModals((state) => ({ ...state, [key]: ModalComponent }));
     };
 
     const openModal: Modals['openModal'] = (key, props = {}) => {
-        setModal({
-            open: true,
+        setModal((state) => [...state, {
             key,
             Component: modals[key],
             props,
-        });
+        }]);
     };
 
-    const closeModal: Modals['closeModal'] = () => setModal({ open: false, key: null, Component: null, props: null });
+    const closeModal: Modals['closeModal'] = (key?: string) => {
+        if (key === undefined) {
+            setModal([]);
+        } else {
+            setModal((state) => state.filter((item) => item.key !== key));
+        }
+    };
 
     return (
         <ModalsContext.Provider
@@ -65,7 +62,9 @@ export const ModalsProvider: React.FC<Props> = ({ children, initialModals = {} }
                 closeModal,
             }}
         >
-            {modal.open ? <modal.Component {...modal.props} open /> : null}
+            {modal.map((item) => (
+                <item.Component {...item.props} open key={item.key} />
+            ))}
             {children}
         </ModalsContext.Provider>
     );

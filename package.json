@@ -1,6 +1,6 @@
 {
   "name": "react-modal-controller",
-  "version": "1.0.8",
+  "version": "2.0.0",
   "description": "Small hook for manage all modals in your React application",
   "main": "dist/index.js",
   "scripts": {
